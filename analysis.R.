@@ -1,1 +1,85 @@
+# Retail Product Pricing Analysis
+# Language: R
+# Dataset: Diamonds (ggplot2)
 
+# 1. Load libraries
+library(ggplot2)
+library(dplyr)
+
+# 2. Load dataset
+data("diamonds")
+
+# 3. Understand the data
+head(diamonds)
+str(diamonds)
+summary(diamonds)
+
+# 4. Check missing values
+colSums(is.na(diamonds))
+
+# 5. Calculate key statistics
+price_summary <- diamonds %>%
+  summarise(
+    Total_Products = n(),
+    Average_Price = mean(price),
+    Median_Price = median(price),
+    Minimum_Price = min(price),
+    Maximum_Price = max(price)
+  )
+
+print(price_summary)
+
+# 6. Average price by diamond cut
+cut_analysis <- diamonds %>%
+  group_by(cut) %>%
+  summarise(
+    Average_Price = mean(price),
+    Median_Price = median(price),
+    Number_of_Products = n(),
+    .groups = "drop"
+  )
+
+print(cut_analysis)
+
+# 7. Visualise price distribution
+ggplot(diamonds, aes(x = price)) +
+  geom_histogram(bins = 30, fill = "steelblue", colour = "white") +
+  labs(
+    title = "Distribution of Diamond Prices",
+    x = "Price (USD)",
+    y = "Number of Diamonds"
+  ) +
+  theme_minimal()
+
+# 8. Analyse carat and price relationship
+ggplot(diamonds, aes(x = carat, y = price)) +
+  geom_point(alpha = 0.3, colour = "darkblue") +
+  geom_smooth(method = "lm", se = FALSE, colour = "red") +
+  labs(
+    title = "Relationship Between Carat and Price",
+    x = "Carat",
+    y = "Price (USD)"
+  ) +
+  theme_minimal()
+
+# 9. Compare prices across diamond cuts
+ggplot(diamonds, aes(x = cut, y = price)) +
+  geom_boxplot(fill = "skyblue") +
+  labs(
+    title = "Diamond Prices Across Different Cuts",
+    x = "Diamond Cut",
+    y = "Price (USD)"
+  ) +
+  theme_minimal()
+
+# 10. Analyse average price by clarity
+clarity_analysis <- diamonds %>%
+  group_by(clarity) %>%
+  summarise(
+    Average_Price = mean(price),
+    .groups = "drop"
+  )
+
+print(clarity_analysis)
+
+# End of analysis
