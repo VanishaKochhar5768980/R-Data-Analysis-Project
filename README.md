@@ -1,6 +1,5 @@
 # R-Data-Analysis-Project
-An exploratory data analysis project using R, focusing on product pricing, trends and visualisation.
-Retail Product Pricing Analysis Using R
+Exploratory data analysis of diamond prices using R, ggplot2 and data visualisation.
 
 ## Objectives
 - Explore the distribution of product prices.
